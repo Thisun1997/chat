@@ -3,7 +3,9 @@ import logo from './logo.svg';
 import {BrowserRouter, Route, Link, Switch, Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
 import * as  chatActions from './store/actions/chatActions';
+import * as  AuthActions from './store/actions/authActions';
 import Auth from './components/pages/Auth';
+import Messanger from './components/pages/Messenger';
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 class  App extends React.Component {
@@ -15,24 +17,55 @@ class  App extends React.Component {
     return (
       <div className="App">
         <button onClick={e => {
-          if(this.props.socket){
-            this.props.socket.send(JSON.stringify({
-              type: 'Hello',
-              data: 'World'
-            }))
-          }
-        }}>send</button>
+          this.props.logout();
+        }}>Logout</button>
         <BrowserRouter>
           <Switch>
             <Route
               path = "/login"
-              component = {Auth}
+              render = {props =>{
+                if(this.props.token){
+                  return(
+                    <Redirect to="/" />
+                  )
+                }else{
+                  return(
+                    <Auth />
+                  )
+                }
+              }} 
               />
 
             <Route
               path = "/signup"
-              component = {Auth}
+              render = {props =>{
+                if(this.props.token){
+                  return(
+                    <Redirect to="/" />
+                  )
+                }else{
+                  return(
+                    <Auth />
+                  )
+                }
+              }} 
               />
+
+              <Route
+              path = "/:threadId"
+              render={ props => {
+                if(!this.props.token){
+                  return(
+                    <Redirect to = "/login" />
+                  )
+                }else{
+                  return(
+                    <Messanger />
+                  )
+                }
+                
+              }} />
+
   
             <Route
               path = "/"
@@ -43,7 +76,7 @@ class  App extends React.Component {
                   )
                 }else{
                   return(
-                    <h1>Root</h1>
+                    <Messanger />
                   )
                 }
                 
@@ -67,8 +100,12 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
       setupSocket: () => {
         dispatch(chatActions.setupSocket());
+      },
+      logout: () => {
+        dispatch(AuthActions.logout());
       }
 })
+
 
 
 export default connect(
