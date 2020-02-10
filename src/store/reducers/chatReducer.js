@@ -2,7 +2,8 @@ const defaultState = {
     socket: null,
     message: '',
     threads: [],
-    currentThread: ''
+    currentThread: '',
+    users: []
 }
 
 const chat = (state = defaultState, action) => {
@@ -11,6 +12,23 @@ const chat = (state = defaultState, action) => {
             return {
                 ...state,
                 socket: action.payload
+            }
+        case 'GOT_USERS':
+            return {
+                ...state,
+                users: action.payload
+            }
+        case 'ADD_THREAD':
+            //console.log(action.payload.id)
+            return{
+                ...state,
+                threads: state.threads.filter(t => t.id === action.payload.id).length === 0 ? state.threads.concat(action.payload)
+                : state.threads
+            }
+        case 'INITIAL_THREADS':
+            return{
+                ...state,
+                threads: action.payload
             }
         default:
             return state

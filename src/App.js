@@ -11,8 +11,10 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 class  App extends React.Component {
 
   componentDidMount(){
-    this.props.setupSocket();
+    this.props.setupSocket(this.props.token, this.props.user.id);
   }
+
+
   render(){
     return (
       <div className="App">
@@ -98,8 +100,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-      setupSocket: () => {
-        dispatch(chatActions.setupSocket());
+      setupSocket: (token, userId) => {
+        dispatch(chatActions.setupSocket(token, userId));
       },
       logout: () => {
         dispatch(AuthActions.logout());
