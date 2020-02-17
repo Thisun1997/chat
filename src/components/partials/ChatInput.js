@@ -11,17 +11,39 @@ class ChatInput extends Component{
 
     }
     
+
+    sendMessage = (e) => {
+        e.preventDefault();
+        const msg = {
+            threadId: this.props.match.params.threadId,
+            userId: this.props.user.id,
+            content: this.state.content,
+            date: new Date()
+        }
+
+        this.props.socket.send(JSON.stringify({
+            type: 'ADD_MESSAGE',
+            threadId: msg.threadId,
+            message: msg,
+        }));
+
+        this.setState({content: ''})
+    }
     render(){
         return(
-            <div className="input-view">
-               <input 
+            <form className="input-view" onSubmit={e => this.sendMessage(e)}>
+                <div className = "input-group">
+                <input 
                 type="text" 
                 placeholder="write your message"
                 className = "form-control"
                 value = {this.state.content}
                 onChange={e => this.setState({content: e.target.value})}
             />
-            </div>
+            <button className="btn btn-send input-group-append"><i className="zmdi zmdi-mail-send"/></button>
+                </div>
+               
+            </form>
         )
     }
 }

@@ -7,6 +7,8 @@ import * as  AuthActions from './store/actions/authActions';
 import Auth from './components/pages/Auth';
 import Messanger from './components/pages/Messenger';
 import 'bootstrap/dist/css/bootstrap.min.css'
+// import 'bootstrap/dist/js/bootstrap.min.js'
+// require('bootstrap')
 
 class  App extends React.Component {
 

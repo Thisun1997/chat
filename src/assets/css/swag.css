@@ -34,7 +34,12 @@ html, body, #root, .App{
     left:300px;
     background: #fafafa;
     height: 100vh;
-    width: 100%;
+    width: calc(100% - 300px);
+    top: 0;
+    height: calc(100vh - 42px);
+    overflow: hidden;
+    overflow-y: scroll;
+    padding-bottom: 10px;
 }
 
 ul.thread-list{
@@ -78,7 +83,7 @@ ul.thread-list label{
 .input-view{
     position: fixed;
     left: 300px;
-    width: 100%;
+    width: calc(100% - 300px);
     bottom: 0px;
 }
 
@@ -91,3 +96,45 @@ ul.thread-list label{
     height: auto;
     padding: 10px;
 }
+
+.message-item {
+    padding: 10px;
+}
+
+.message-item.msg-right{
+    text-align: right;
+}
+
+.message-item.msg-right .zmdi.zmdi-account-circle{
+    float: right;
+    margin-top: 5px;
+    font-size: 32px;
+    color: #aaa;
+    margin-left: 5px;
+    margin-left: 0px;
+}
+
+.message-item.msg-left .zmdi.zmdi-account-circle{
+    float: left;
+    margin-top: 5px;
+    font-size: 32px;
+    color: #aaa;
+    margin-left: 0px;
+    margin-left: 5px;
+}
+
+.message-item .chat-bubble {
+    max-width: 600px;
+    display: inline-block;
+    padding: 10px 15px;
+    border-radius: 5px;
+    background: #ddd;
+    margin: 0px 5px;
+    padding-top: 4px;
+}
+
+.message-item.msg-right .chat-bubble{
+    background: #1d8ff1;
+    color: #fff;
+}
+
